@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!--准备一个容器-->
+    <div id ="root">
+        <h2>欢迎来到{{name}}</h2>
+        <!-- <input type="text" placeholder="按下回车提示输入"@keyup="showInfo">
+        <input type="text" placeholder="按下回车提示输入"@keyup.enter="showInfo"> -->
+        <!-- <input type="text" placeholder="按下回车提示输入"@keyup.delete="showInfo"> -->
+        <!-- <input type="text" placeholder="按下回车提示输入"@keyup.esc="showInfo"> -->
+        <!--这种多个单词拼接成的案件 需要中间加一个横杠 -     -->
+        <input type="text" placeholder="按下回车提示输入"@keyup.caps-lock="showInfo">
+    </div>
+</body>
+
+<script>
+    Vue.config.productionTip = false;//阻止vue在启动生成生产提示。
+
+
+    const vm = new Vue({
+        el:"#root",
+        data:{
+            name:'尚硅谷',
+        },
+        methods:{
+            showInfo(e){
+                // console.log(e.keyCode)//打印输入案件的ASCAII
+                //回车的ASCAII是13
+
+
+                console.log(e.key,e.keyCode)
+                // if(e.keyCode!==13) return 
+                // console.log(e.target.value)
+            }
+        }
+    })
+</script>
+</html>
