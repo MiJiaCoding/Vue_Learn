@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>姓名案例计算属性实现</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!--准备一个容器-->
+    <div id ="root">
+        姓:<input type="text" v-model="firstName"><br/><br/>
+        名:<input type="text" v-model="lastName"><br/><br/>
+        全名:<span>{{fullName}}</span><br/><br/>
+        <!--vue自己做了一个缓存！！！ 后面再次计算fullName不用get（），直接从缓存中第哦啊用-->
+        全名:<span>{{fullName}}</span><br/><br/>
+        全名:<span>{{fullName}}</span><br/><br/>
+        全名:<span>{{fullName}}</span><br/><br/>
+
+
+
+    </div>
+</body>
+
+<script>
+    Vue.config.productionTip = false;//阻止vue在启动生成生产提示。
+
+
+    const vm = new Vue({
+        el:"#root",
+        data:{
+            firstName:'张',
+            lastName:"三",
+        },
+        methods:{
+
+        },
+        computed:{
+            fullName:{
+                //get有什么作用？当有人读取fullName是，get就会被调用。且返回值就作为fullName的值
+                get(){
+                    console.log('get被调用了')
+                    
+                    // 这样是拿不到的 return firstName+'-'+lastName
+
+                    // console.log(this)
+                    return this.firstName+'-'+this.lastName
+                },
+                //set()不是必须的
+                //set()什么时候被修改？当fullName被修改时
+                set(value){
+                    console.log("set",value)
+                    const arr=value.split('-')
+                    this.firstName=arr[0]
+                    this.lastName=arr[1]
+                }
+            }
+        }
+
+    })
+</script>
+</html>
