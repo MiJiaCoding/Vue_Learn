@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!--准备一个容器-->
+    <div id ="root">
+        姓:<input type="text" v-model="firstName"><br/>
+        名:<input type="text" v-model="lastName"><br/>
+        <!-- 全名:<span>{{firstName+'-'+lastName}}</span> -->
+        全名:<span>{{firstName.slice(0,3)}}-{{lastName}}</span>
+    </div>
+</body>
+
+<script>
+    Vue.config.productionTip = false;//阻止vue在启动生成生产提示。
+
+
+    const vm = new Vue({
+        el:"#root",
+        data:{
+            firstName:'张',
+            lastName:"三",
+        },
+        methods:{
+
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!--准备一个容器-->
+    <div id ="root">
+        姓:<input type="text" v-model="firstName"><br/>
+        名:<input type="text" v-model="lastName"><br/>
+        <!--插值语法中，不加括号表示把函数插入，加小括号才是插入返回值-->
+        全名:<span>{{fullName()}}</span>
+        <!-- mothod 作为事件回调,小括号（）加不加都行-->
+        <!-- <button @click="fullName()">点我</button> -->
+    </div>
+</body>
+
+<script>
+    Vue.config.productionTip = false;//阻止vue在启动生成生产提示。
+
+
+    const vm = new Vue({
+        el:"#root",
+        data:{
+            firstName:'张',
+            lastName:"三",
+        },
+        methods:{
+            fullName(){
+                // return "小猪佩奇"
+                console.log("当你修改哦firstName或者lastName的时候fullName()函数会被多次调用！！！")
+                console.log("修改一次,我就出现一次！")
+                return this.firstName+'-'+this.lastName
+            }
+        }
+    })
+</script>
+</html>
