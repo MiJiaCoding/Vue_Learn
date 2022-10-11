@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>姓名案例计算属性实现</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!--准备一个容器-->
+    <div id ="root">
+        姓:<input type="text" v-model="firstName"><br/><br/>
+        名:<input type="text" v-model="lastName"><br/><br/>
+        全名:<span>{{fullName}}</span><br/><br/>
+    </div>
+</body>
+
+<script>
+    Vue.config.productionTip = false;//阻止vue在启动生成生产提示。
+
+
+    const vm = new Vue({
+        el:"#root",
+        data:{
+            firstName:'张',
+            lastName:"三",
+            // 用computed不用在data中定义fullName
+            // 如果是用watch 则需要自己定义fullName
+            fullName:"张-三"
+        },
+        computed:{
+        //简写
+        fullName(){
+            //计算属性中不能开启异步任务去维护数据
+            console.log('get被调用了')
+            //靠返回值
+            return this.firstName+'-'+this.lastName
+            }
+        },
+        watch:{
+            // 不需要deep 不需要immediate，可以用简写
+            firstName(newValue,oldValue){
+                // console.log(this)
+
+                // this.fullName=newValue+'-'+this.lastName
+                
+                //监视里面可以写异步
+                //定时器虽然是在vue所管理的fullName函数中开启的，但是定时器所指定的回调不受vue控制。
+                //由浏览器定时器管理模块控制的，到点了，js引擎帮你调
+                // 定时器要用箭头函数
+                setTimeout(() => {
+                    this.fullName=newValue+'-'+this.lastName
+                }, 1000);
+            },
+            lastName(newValue,oldValue){
+                // console.log(this)
+                this.fullName=this.firstName+'-'+newValue
+            }
+        }
+})  
+</script>
+</html>
