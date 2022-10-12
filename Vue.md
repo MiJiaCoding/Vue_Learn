@@ -1554,3 +1554,26 @@ computed和lwatch之间的区别:
 
 
 
+# 11.条件渲染
+
+
+
+##面试题v-show和v-if的区别
+
+v-show改变的是display
+
+![1665579520691](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665579520691.png)
+
+
+
+v-if 直接把<h2>搞没了
+
+```html
+ <h2 v-if="false">欢迎来到{{name}}</h2>
+```
+
+![1665579613374](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665579613374.png)
+
+
+
+P28  	8：50
