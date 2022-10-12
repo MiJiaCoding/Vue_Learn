@@ -1465,6 +1465,35 @@ computed和lwatch之间的区别:
 
 
 
+绑定样式:
+1. class样式
+
+  > 写法:class="xxx"xxx可以是字符串、对象、数组。
+
+  > **字符串写法**适用于:类名不确定，要动态获取。
+
+  > **对象写法**适用于:要绑定多个样式，个数不确定，名字也不确定。
+
+  > **数组写法**适用于:要绑定多个样式，个数确定，名字也确定，但不确定用不用。
+
+2. style样式
+
+  > : style="{fontSize: xxx}"其中xxx是动态值。
+
+  > : style="[a,b]"其中a、b是**样式对象**。
+
+
+
+**注意！什么叫样式对象？**
+
+**key不能瞎写，得是存在的这么一个css属性**
+
+![1665578781664](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665578781664.png)
+
+
+
+
+
 ## 1.绑定style样式
 
 ```html
@@ -1520,3 +1549,8 @@ computed和lwatch之间的区别:
 ### II.绑定style样式-数组写法
 
 ![1665577770124](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665577770124.png)
+
+
+
+
+
