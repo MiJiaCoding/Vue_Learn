@@ -6,8 +6,29 @@
     <script src="../js/vue.js"></script>
 </head>
 <body>
+
+    <!-- 条件渲染:
+1.v-if
+写法:
+(1).v-if="表达式"
+(2).+-else-if="表达式"
+(3).v-else="表达式"适用于:切换频率较低的场景。
+特点:不展示的DOM元素直接被移除。
+注意: v-if可以和:v-else-if、v-else一起使用，但要求结构不能被"打断。
+2.v-show
+写法: v-show="表达式"
+适用于:切换频率较高的场景。
+特点:不展示的DOM元素未被移除,仅仅是使用样式隐藏掉
+3.备注:使用v-if的时，元素可能无法获取到，而使用v-show一定可以获取到。
+-->
+
     <!--准备一个容器-->
     <div id ="root">
+        <h1>当前的值是:{{n}}</h1>
+        <button @click="n++">点我n+1</button>
+
+
+        
         <!-- 使用v-show做条件渲染-->
         <!-- <h2 v-show="false">欢迎来到{{name}}</h2> -->
         <!-- <h2 v-show="1===1">欢迎来到{{name}}</h2> -->
@@ -16,11 +37,31 @@
         <!-- <h2 v-if="false">欢迎来到{{name}}</h2> -->
         <!-- <h2 v-if="1===1">欢迎来到{{name}}</h2> -->
 
+
+        <!--如果切换频率高，咱们用v-show-->
+        <h2 v-show="n===1">Angular</h2>
+        <h2 v-show="n===2">React</h2>
+        <h2 v-show ="n===3">Vue</h2>
         
+        <!--频率低可以用v-if  （它会操作dom树）？-->
         <h2 v-if="n===1">Angular</h2>
-        <h2 v-if="n===2">React</h2>
+        <h2 v-if="n===1">React</h2>
         <h2 v-if="n===3">Vue</h2>
 
+
+        <!--v=else和v-else-if -->
+        <h2 v-if="n===1">Angular</h2>
+        <h2 v-else-if="n===1">React</h2>
+        <h2 v-else-if="n===3">Vue</h2>
+        <h2 v-else>哈哈</h2>
+
+
+        <!-- v-if 与template的配合使用-->
+        <template v-show="n===1">
+            <h2>你好</h2>
+            <h2>米迦</h2>
+            <h2>北京</h2>
+        </template>
 
     </div>
 </body>
@@ -33,6 +74,7 @@
         el:"#root",
         data:{
             name:'尚硅谷',
+            n:0,
         },
         methods:{
 
