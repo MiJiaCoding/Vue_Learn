@@ -1,4 +1,10 @@
-# 配置
+@Michaela @芃.  本周目标：
+1、 完成一个winform程序，使其可以在窗体显示一个bmp图片文件(https://www.hlevkin.com/hlevkin/TestImages/planets/Earth.bmp)@Michaela @芃.  本周目标：
+1、 完成一个winform程序，使其可以在窗体显示一个bmp图片文件(https://www.hlevkin.com/hlevkin/TestImages/planets/Earth.bmp)
+2、 在该程序的基础上，实现对图片的2x放大处理(图片可变动放大位置)
+3、 使用双缓冲绘图技术
+2、 在该程序的基础上，实现对图片的2x放大处理(图片可变动放大位置)
+3、 使用双缓冲绘图技术配置
 
 vscode颜色主题是： **Atom One Dark Theme**
 
@@ -1001,7 +1007,7 @@ ctrl+任意按键同时按在keyup时才有用
 
 
 
-# 9.监视属性
+# 9.监视属性 watch
 
 1.当被监视的属性变化时,回调函数自动调用,进行相关操作
 
@@ -1021,7 +1027,7 @@ ctrl+任意按键同时按在keyup时才有用
 (2).配置deep:true可以监测对象内部值改变（**多层**）。
 
 备注:
-(1).vue自身可以监测对象内部值的改变，但Vue提供的watch**默认不可以**!
+(1).vue自身可以**监测对象内部值的改变**，但Vue提供的watch**默认不可以**!
 
 (2).使用watch时根据数据的具体结构,决定是否采用**深度监视**。
 
@@ -1589,7 +1595,7 @@ computed和lwatch之间的区别:
 
 
 
-##面试题v-show和v-if的区别
+##面试题.v-show和v-if的区别
 
 
 
@@ -1615,3 +1621,346 @@ v-if 直接把<h2>搞没了
 
 # 10/13/22 12.列表渲染
 
+## 1.基本列表
+
+v-for指令:
+
+1.用于展示列表数据
+
+2.语法: v-for="(item，index) in xxx" : key="yyy"
+
+3.可遍历:数组、对象、字符串（用的很少)、指定次数（用的很少)
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!--准备一个容器-->
+    <div id ="root">
+        <h2>人员列表</h2>
+            <li v-for="p in persons" :key="p.id">
+                {{p.name}}-{{p.age}}
+            </li>
+    
+            <li v-for="(p,index) in persons" :key="p.id">
+                {{p}}--{{index}}
+            </li>
+
+            <li v-for="(p,index) in persons" :key="index">
+                {{p}}--{{index}}
+            </li>
+            
+        </ul>
+
+        <!--遍历对想-->>
+        <h2>汽车信息</h2>
+        <ul>
+            <li v-for="(value,k) of car" key="k">
+                {{k}}--{{value}}
+            </li>
+        </ul>
+
+        <!--遍历字符串-->
+        <ul>
+            <li v-for="(char,index) of str" :key ="index">
+                {{index}}--{{char}}
+            </li>
+        </ul>
+
+
+        <!--遍历指定次数-->
+        <ul>
+            <li v-for="(number,index) of 5" :key="index">
+                {{index}}--{{number}}
+            </li>
+        </ul>
+    </div>
+</body>
+
+<script>
+    Vue.config.productionTip = false;//阻止vue在启动生成生产提示。
+
+
+    const vm = new Vue({
+        el:"#root",
+        data:{
+            persons:[
+                {id:'001',name:'张三',age:18},
+                {id:'002',name:'李四',age:19},
+                {id:'003',name:'王五',age:20},
+            ],
+            car:{
+                name:"奥迪A8",
+                price:'70万',
+                color:'蓝色',
+            },
+            str:'hello'
+        },
+        
+        methods:{
+
+        }
+    })
+</script>
+</html>
+
+```
+
+
+
+## 2.	key的原理
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!--准备一个容器-->
+    <div id ="root">
+        <h2>人员列表</h2>
+        <button @click.once="add">添加一个老刘</button>
+            <li v-for="(p,index) in persons" :key="     ">
+                {{p.name}}-{{p.age}}
+                <input type="text">
+            </li>
+    
+            <!-- <li v-for="(p,index) in persons" :key="p.id">
+                {{p}}--{{index}}
+            </li>
+
+            <li v-for="(p,index) in persons" :key="index">
+                {{p}}--{{index}}
+            </li> -->
+            
+        </ul>
+
+    </div>
+</body>
+
+<script>
+    Vue.config.productionTip = false;//阻止vue在启动生成生产提示。
+
+
+    const vm = new Vue({
+        el:"#root",
+        data:{
+            persons:[
+                {id:'001',name:'张三',age:18},
+                {id:'002',name:'李四',age:19},
+                {id:'003',name:'王五',age:20},
+            ],
+            car:{
+                name:"奥迪A8",
+                price:'70万',
+                color:'蓝色',
+            },
+            str:'hello'
+        },
+        
+        methods:{
+            add(){
+                const p={id:'004',name:'老刘',age:40}
+                this.persons.unshift(p)
+            }
+        }
+    })
+</script>
+</html>
+
+```
+
+
+
+
+
+：key 如果用index 会出现错位
+
+unshift添加的老刘
+
+![1665658027378](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665658027378.png)
+
+
+
+
+
+
+
+（补充：用户输入的操作的是真实dom）
+
+### I.（index作为key）遍历列表是key的作用
+
+![1665659002573](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665659002573.png)
+
+
+
+
+
+###II.（id为key）遍历列表时key的作用
+
+![1665659308101](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665659308101.png)
+
+
+
+
+
+## 面试题.:react、 vue中的key有什么作用? （key的内部原理)
+**1.虚拟DOM中key的作用:**
+
+>​	key是虚拟DON对象的标识，当状态中的数据发生变化时，Vue会根据【新数据】生成【新的	虚拟DON】,随后Vue进行**【新虚拟DOM】与【旧虚拟DOM】的差异比较**，比较规则如下:
+
+**2.对比规则:**
+
+>(1).旧虚拟DOM中找到了与新虚拟DOM相同的key:
+>
+>​	1.若虚拟DOM中内容没变，直接使用之前的真实DOM !
+>​	2.若虚拟DOM中内容变了，则生成新的真实DOM，随后替换掉页面中之前的真实DOM。
+
+> (2).旧虚拟DOM中未找到与新虚拟DOM相同的key:
+>
+> ​	创建新的真实DOM,随后渲染到到页面。
+
+**3．用index作为key可能会引发的问题:**
+
+> ​	1.若对数据进行:==逆序添加==、==逆序删除==等破坏顺序操作:
+> ​		会产生没有必要的真实DOM更新-->界面效果没问题，但效率低
+
+> ​	2.如果结构中还包含输入类的DOM:
+> ​		会产生错误DOM更新-->界面有问题。
+
+**4、开发中如何选择key? :**
+
+> ​	1.最好使用每条数据的唯一标识作为key，比如id、手机号、身份证号、学号等唯一值。
+
+> ​	2.如果不存在对数据的==逆序添加==、==逆序删除==等破坏顺序操作，仅用于渲染列表用于展示，使用index作为key是没有问题的。
+
+
+
+## 3.列表过滤
+
+![1665662889310](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665662889310.png)
+
+
+
+
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!--准备一个容器-->
+    <div id ="root">
+        <!-- <h2>人员列表</h2>
+        <input type="text" placeholder="请输入名字" v-model="keyWord">
+        <ul>
+            <li v-for="(p,index) in persons" :key="index">
+                {{p.name}}--{{p.age}}--{{p.sex}}
+            </li>
+        </ul> -->
+
+        <h2>人员列表</h2>
+        <input type="text" placeholder="请输入名字" v-model="keyWord">
+        <ul>
+            <li v-for="(p,index) in filPersons" :key="index">
+                {{p.name}}--{{p.age}}--{{p.sex}}
+            </li>
+        </ul>
+    </div>
+</body>
+
+<script>
+    Vue.config.productionTip = false;//阻止vue在启动生成生产提示。
+
+
+    // 用watch实现
+    //#region
+    // const vm = new Vue({
+    //     el:"#root",
+    //     data:{
+    //         keyWord:'',
+    //         persons:[
+    //             {id:'001',name:'马冬梅',age:18,sex:'女'},
+    //             {id:'002',name:'周冬雨',age:19,sex:'女'},
+    //             {id:'003',name:'周杰伦',age:21,sex:'男'},
+    //             {id:'004',name:'温兆伦',age:22,sex:'男'},
+    //         ],
+    //         filPersons:[],
+    //     },
+    //     methods:{
+
+    //     },
+    //     watch:{
+
+
+    //         // keyWord(val){
+    //         //     console.log("改了",val)
+    //         //     // 下面这越搜索越少！！ 所以不要对原数组进行操作
+    //         //     this.filPersons=this.persons.filter((p)=>{
+    //         //         // name 包含val
+    //         //         // indexof 包含return index位置，不包含return  -1
+    //         //         return p.name.indexOf(val)!==-1
+    //         //     })
+
+    //             keyWord:{
+    //                //没输入是空串，filPersons包含空字串（index是0），所以应该iji执行监视，这样就可以刷新出来
+    //                 immediate:true,
+    //                 handler(val){
+    //                     this.filPersons=this.persons.filter((p)=>{
+    //                 // name 包含val
+    //                 // indexof 包含return index位置，不包含return  -1
+    //                     return p.name.indexOf(val)!==-1
+    //                 })
+    //             }
+    //         }
+    //     }
+    // })
+    //#endregion
+
+
+
+// 用computed实现
+    const vm = new Vue({
+        el:"#root",
+        data:{
+            keyWord:'',
+            persons:[
+                {id:'001',name:'马冬梅',age:18,sex:'女'},
+                {id:'002',name:'周冬雨',age:19,sex:'女'},
+                {id:'003',name:'周杰伦',age:21,sex:'男'},
+                {id:'004',name:'温兆伦',age:22,sex:'男'},
+            ],
+           
+        },
+        computed:{
+            filPersons(){
+                return this.filPersons=this.persons.filter((p)=>{
+                    return p.name.indexOf(this.keyWord)!==-1
+                })
+            }
+        },
+    })
+</script>
+</html>
+
+```
+
+
+
+
+
+## 4.列表排序
+
+![1665669057928](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665669057928.png)

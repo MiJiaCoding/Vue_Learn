@@ -9,42 +9,22 @@
     <!--准备一个容器-->
     <div id ="root">
         <h2>人员列表</h2>
-            <li v-for="p in persons" :key="p.id">
+        <button @click.once="add">添加一个老刘</button>
+            <li v-for="(p,index) in persons" :key="     ">
                 {{p.name}}-{{p.age}}
+                <input type="text">
             </li>
     
-            <li v-for="(p,index) in persons" :key="p.id">
+            <!-- <li v-for="(p,index) in persons" :key="p.id">
                 {{p}}--{{index}}
             </li>
 
             <li v-for="(p,index) in persons" :key="index">
                 {{p}}--{{index}}
-            </li>
+            </li> -->
             
         </ul>
 
-        <!--遍历对想-->>
-        <h2>汽车信息</h2>
-        <ul>
-            <li v-for="(value,k) of car" key="k">
-                {{k}}--{{value}}
-            </li>
-        </ul>
-
-        <!--遍历字符串-->
-        <ul>
-            <li v-for="(char,index) of str" :key ="index">
-                {{index}}--{{char}}
-            </li>
-        </ul>
-
-
-        <!--遍历指定次数-->
-        <ul>
-            <li v-for="(number,index) of 5" :key="index">
-                {{index}}--{{number}}
-            </li>
-        </ul>
     </div>
 </body>
 
@@ -69,7 +49,10 @@
         },
         
         methods:{
-
+            add(){
+                const p={id:'004',name:'老刘',age:40}
+                this.persons.unshift(p)
+            }
         }
     })
 </script>

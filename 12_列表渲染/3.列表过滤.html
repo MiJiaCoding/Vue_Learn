@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!--准备一个容器-->
+    <div id ="root">
+        <!-- <h2>人员列表</h2>
+        <input type="text" placeholder="请输入名字" v-model="keyWord">
+        <ul>
+            <li v-for="(p,index) in persons" :key="index">
+                {{p.name}}--{{p.age}}--{{p.sex}}
+            </li>
+        </ul> -->
+
+        <h2>人员列表</h2>
+        <input type="text" placeholder="请输入名字" v-model="keyWord">
+        <ul>
+            <li v-for="(p,index) of filPersons" :key="index">
+                {{p.name}}--{{p.age}}--{{p.sex}}
+            </li>
+        </ul>
+    </div>
+</body>
+
+<script>
+    Vue.config.productionTip = false;//阻止vue在启动生成生产提示。
+
+
+    // 用watch实现
+    //#region
+    // const vm = new Vue({
+    //     el:"#root",
+    //     data:{
+    //         keyWord:'',
+    //         persons:[
+    //             {id:'001',name:'马冬梅',age:18,sex:'女'},
+    //             {id:'002',name:'周冬雨',age:19,sex:'女'},
+    //             {id:'003',name:'周杰伦',age:21,sex:'男'},
+    //             {id:'004',name:'温兆伦',age:22,sex:'男'},
+    //         ],
+    //         filPersons:[],
+    //     },
+    //     methods:{
+
+    //     },
+    //     watch:{
+
+
+    //         // keyWord(val){
+    //         //     console.log("改了",val)
+    //         //     // 下面这越搜索越少！！ 所以不要对原数组进行操作
+    //         //     this.filPersons=this.persons.filter((p)=>{
+    //         //         // name 包含val
+    //         //         // indexof 包含return index位置，不包含return  -1
+    //         //         return p.name.indexOf(val)!==-1
+    //         //     })
+
+    //             keyWord:{
+    //                  //没输入是空串，filPersons包含空字串（index是0），所以应该iji执行监视，这样就可以刷新出来
+    //                 immediate:true,
+    //                 handler(val){
+    //                     this.filPersons=this.persons.filter((p)=>{
+    //                 // name 包含val
+    //                 // indexof 包含return index位置，不包含return  -1
+    //                     return p.name.indexOf(val)!==-1
+    //                 })
+    //             }
+    //         }
+    //     }
+    // })
+    //#endregion
+
+
+
+// 用computed实现
+    const vm = new Vue({
+        el:"#root",
+        data:{
+            keyWord:'',
+            persons:[
+                {id:'001',name:'马冬梅',age:18,sex:'女'},
+                {id:'002',name:'周冬雨',age:19,sex:'女'},
+                {id:'003',name:'周杰伦',age:21,sex:'男'},
+                {id:'004',name:'温兆伦',age:22,sex:'男'},
+            ],
+           
+        },
+        computed:{
+            filPersons(){
+                return this.persons=this.persons.filter((p)=>{
+                    return p.name.indexOf(this.keyWord)!==-1
+                })
+            }
+        },
+    })
+</script>
+</html>
