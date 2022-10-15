@@ -2479,3 +2479,74 @@ number:输入字符串转为有效的数字trim:输入首尾空格过滤
 
 
 ![1665843649449](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665843649449.png)
+
+
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+    <script src="../js/dayjs.min.js"></script>
+</head>
+<body>
+    <!--准备一个容器-->
+    <div id ="root">
+        <h2>显示格式化后的时间</h2>
+        <!--计算属性实现-->
+        <h3>现在是：{{fmtTime}}</h3>
+        
+        <!--methods实现-->
+        <h3>现在是：{{getFmtTime()}}</h3>
+
+        <!-- 过滤器实现  | timeFormater 不写（）也会自动传入time-->
+        <h3>现在是：{{time | timeFormater }}</h3>
+        <!--过滤器(传参)-->
+        <h3>现在是：{{time | timeFormater('YYYY_MM_DD')| mySlice }}</h3>
+
+        <h3 :x="msg|mySlice">你好你好,后面的字不要了啊</h3>
+
+    </div>
+</body>
+
+<script>
+    Vue.config.productionTip = false;//阻止vue在启动生成生产提示。
+
+    // 全局过滤器 写在new Vue 之前
+    Vue.filter('mySlice',function(value){
+        return value.slice(0,4)
+    })
+
+    const vm = new Vue({
+        el:"#root",
+        data:{
+            time:1621561377603,//时间戳
+            msg:'你好你好,后面的字不要了啊',
+        },
+        computed:{
+            fmtTime(){
+                return dayjs(this.time).format('YYYY年MM月DD日 HH:mm:ss')
+            }
+        },
+        methods:{
+            getFmtTime(){
+                return dayjs(this.time).format('YYYY年MM月DD日 HH:mm:ss')
+            }
+        },
+        // 这里写的是局部过滤器
+        filters:{
+            timeFormater(value,str='YYYY年MM月DD日 HH:mm:ss'){
+                return dayjs(value).format(str)
+            },
+            mySlice(value){
+                return value.slice(0,4)
+            }
+        }
+    })
+</script>
+</html>
+
+```
+
