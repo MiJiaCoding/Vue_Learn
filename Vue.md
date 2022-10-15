@@ -2456,7 +2456,26 @@ number:输入字符串转为有效的数字trim:输入首尾空格过滤
 
 # 14.过滤器
 
+过滤器:
+
+定义:对要显示的数据进行**特定格式化**后再显示（适用于一些**简单逻辑**的处理)。语法:
+
+1.注册过滤器: **Vue.filter(name,callback)**或**new Vue{filters:{}}**
+
+2.使用过滤器**:{{ xxx|过滤器名}}**或**v-bind:属性=“xxx│过滤器名"**
+
+备注:
+
+1.过滤器也**可以接收额外参数**、多个过滤器也可以**串联**
+
+2.并**没有改变原本的数据**，是**产生新的**对应的**数据**
+
+
+
+
+
 ![1665840879789](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665840879789.png)
 
 
 
+![1665843649449](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665843649449.png)
