@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+    <script src="../js/dayjs.min.js"></script>
+</head>
+<body>
+    <!--准备一个容器-->
+    <div id ="root">
+        <h2>显示格式化后的时间</h2>
+        <!--计算属性实现-->
+        <h3>现在是：{{fmtTime}}</h3>
+        
+        <!--methods实现-->
+        <h3>现在是：{{getFmtTime()}}</h3>
+
+        <!-- 过滤器实现  | timeFormater 不写（）也会自动传入time-->
+        <h3>现在是：{{time | timeFormater }}</h3>
+    </div>
+</body>
+
+<script>
+    Vue.config.productionTip = false;//阻止vue在启动生成生产提示。
+
+
+    const vm = new Vue({
+        el:"#root",
+        data:{
+            time:1621561377603,//时间戳
+        },
+        computed:{
+            fmtTime(){
+                return dayjs(this.time).format('YYYY年MM月DD日 HH:mm:ss')
+            }
+        },
+        methods:{
+            getFmtTime(){
+                return dayjs(this.time).format('YYYY年MM月DD日 HH:mm:ss')
+            }
+        },
+        filters:{
+            timeFormater(val){
+                return dayjs(val).format('YYYY年MM月DD日 HH:mm:ss')
+            }
+        }
+    })
+</script>
+</html>

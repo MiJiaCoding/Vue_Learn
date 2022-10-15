@@ -1613,6 +1613,52 @@ v-if 直接把<h2>搞没了
 
 # 10/13/22 12.列表渲染
 
+## 10.总结Vue数据监测
+
+Vue监视数据的原理:
+1. vue会监视**data**中**所有层次**的数据。
+
+2. 如何监测对象中的数据?
+  通过**setter实现监视**,且要在new Vue时就传入要监测的数据。
+
+  > (1).对象中**后追加**的属性，Vue**默认不做响应式处理**
+
+  > (2).如需**给后添加的属性做响应式**，请使用如下API:
+  > **Vue.set(target.propertyName/index.value）**或**vm.$set(target.propertyName/index，value)**
+
+3. 如何监测数组中的数据?
+  通过**包裹数组**更新元素的方法实现,本质就是做了两件事:
+
+  > (1).**调用原生**对应的方法对数组进行更新。
+
+  > (2).**重新解析模板**，进而更新页面。
+
+4. 在Vue修改数组中的某个元素一定要用如下方法:
+
+  > 1.使用这些API:push()、pop()、shift()、unshift()、splice()、sort()、reverse();
+
+  > 2.Vue.set()或vm.$set()
+
+  特别注意:==Vue.set()和vm.$set()不能给vm或 vm的根数据(vm._data)对象添加属性!!!==
+
+
+
+
+
+![1665801314866](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665801314866.png)
+
+![1665801616884](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665801616884.png)
+
+![1665801604126](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665801604126.png)
+
+
+
+
+
+
+
+
+
 ## 1.基本列表
 
 v-for指令:
@@ -2159,6 +2205,258 @@ a里面的对象b
 
 
 ## 8. Vue.set的使用
+
+
+
+
+
+
+
+![1665796874294](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665796874294.png)
+
+
+
+### 后添加的sex没有set
+
+![1665796768686](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665796768686.png)
+
+
+
+
+
+
+
+### 为了使后添加的数据也能实现响应式！ 用set
+
+#### 对Vue 用set
+
+![1665796938923](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665796938923.png)
+
+
+
+![1665797003049](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665797003049.png)
+
+
+
+#### 注意 _data做了数据代理 可以直接取到student
+
+![1665797114499](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665797114499.png)
+
+
+
+![1665797136756](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665797136756.png)
+
+
+
+#### vm用$set
+
+
+
+![1665797055967](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665797055967.png)
+
+
+
+![1665797181852](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665797181852.png)
+
+
+
+
+
+#### set（）第一个参数target不可以是vm或者vm._data
+
+![1665797637565](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665797637565.png)
+
+
+
+![1665797651236](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665797651236.png)
+
+
+
+
+
+## 9.监测数据改变的原理_数组
+
+![1665798534694](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665798534694.png)
+
+
+
+
+
+
+
+### 包装技术
+
+![1665798967528](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665798967528.png)
+
+
+
+
+
+
+
+![1665798745679](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665798745679.png)
+
+
+
+
+
+####hobby数组是被vue管理的，你所调用的push就不是正常原型对象的push了
+
+![1665798783415](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665798783415.png)
+
+
+
+
+
+包装
+
+![1665798925456](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665798925456.png)
+
+
+
+
+
+
+
+不常用的
+
+![1665799031398](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665799031398.png)
+
+
+
+# 10/15/22 13.收集表单数据
+
+
+
+收集表单数据:
+
+> 1. 若:<input type="text"/>，则v-model收集的是value值，**用户输入的就是value值**。
+
+> 2. 若: "<input type="radio"/>，则v-model收集的是value值，且**要给标签配置value**值。
+
+> 3. 若: <input type="checkbox" / >
+
+>>1.**没有配置**input的**value属性**，那么收集的就是**checked**（勾选or未勾选，是布尔值)
+>>2.配置input的value属性;
+>>
+>>>(1)v-model的初始值是**非数组**，那么收集的就是**checked（勾选or未勾选，是布尔值)**
+>>>(2)v-model的初始值是**数组**，那么收集的的就是**value组成的数组**
+
+备注: v-model的三个修饰符:
+
+> lazy:**失去焦点**再收集数据
+> number:输入字符串转为有效的数字
+> trim:输入**首尾空格过滤**
+
+
+
+
+
+![1665801717899](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665801717899.png)
+
+
+
+
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+
+    <!--
+        收集表单数据:
+若:<input type="text"/>，则v-model收集的是value值，用户输入的就是value值。若: "<input type="radio"/>，则v-model收集的是value值，且要给标签配置value值。若: <input type="checkbox" / >
+1.没有配置input的value属性，那么收集的就是checked（勾选or未勾选，是布尔值)2.配置input的value属性;
+(1)v-model的初始值是非数组，那么收集的就是checked（勾选or未勾选，是布尔值)(2)v-model的初始值是数组，那么收集的的就是value组成的数组
+备注: v-model的三个修饰符:
+lazy:失去焦点再收集数据
+number:输入字符串转为有效的数字trim:输入首尾空格过滤
+
+    -->
+    <!--准备一个容器-->
+    <div id ="root">
+        <form @submit.prevent="demo">
+            <!-- <label for="demo">账号:</label>
+            <input type="text" id="demo"> -->
+
+            <!-- .trim 去掉前后的空格-->
+            账号：<input type="text" v-model.trim="userInfo.account"><br/>
+            密码：<input type="password" v-model="userInfo.password"><br/>
+            <!-- .number-->
+            年龄：<input type="number" v-model.number="userInfo.age"><br/>
+            性别：
+            男<input type="radio"name="sex" v-model="userInfo.sex" value="male">
+            女<input type="radio"name="sex" v-model="userInfo.sex" value="female"><br/><br/>
+            爱好：
+            学习<input type="checkbox" v-model="userInfo.hobby" value="study">
+            打游戏<input type="checkbox" v-model="userInfo.hobby" value="game">
+            吃饭<input type="checkbox" v-model="userInfo.hobby" value="eat">
+            <br/><br/>
+            所属校区
+            <select v-model="userInfo.city">
+                <option value="">请选择校区</option>
+                <option value="beijing">北京</option>
+                <option value="shanghai">上海</option>
+                <option value="shenzhen">深圳</option>
+                <option value="wuhan">武汉</option>
+            </select>
+        </br></br>
+            其他信息:
+            <!--
+                .lazy 失去焦点的时候才刷新数据
+            -->
+            <textarea v-model.lazy="userInfo.other"></textarea></br></br>
+            <input type="checkbox" v-model="userInfo.agree">阅读并接受<a href="http:www.atguigu.com">《用户协议》</a>
+            <button>提交</button>
+        </form>
+    </div>
+</body>
+
+<script>
+    Vue.config.productionTip = false;//阻止vue在启动生成生产提示。
+
+
+    const vm = new Vue({
+        el:"#root",
+        data:{
+            userInfo:{
+                account:'',
+                password:'',
+                age:'',
+                sex:'female',
+                hobby:[],//不能写成字符串，不然就是绑定的勾不勾选(要么全勾要么全不勾)
+                city:'beijing',
+                other:'',
+                agree:'', //只要勾or不勾 所以用checkbox也没问题
+            }
+           
+        },
+        methods:{
+            demo(){
+                // alert(1)
+                // console.log(Vue.data)
+                // console.log(this._data)
+                // console.log(JSON.stringify(this._data))
+                console.log(JSON.stringify(this.userInfo))
+
+            }
+        }
+    })
+</script>
+</html>
+
+```
+
+
+
+# 14.过滤器
+
+![1665840879789](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665840879789.png)
 
 
 
