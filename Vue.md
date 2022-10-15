@@ -1,11 +1,3 @@
-@Michaela @芃.  本周目标：
-1、 完成一个winform程序，使其可以在窗体显示一个bmp图片文件(https://www.hlevkin.com/hlevkin/TestImages/planets/Earth.bmp)@Michaela @芃.  本周目标：
-1、 完成一个winform程序，使其可以在窗体显示一个bmp图片文件(https://www.hlevkin.com/hlevkin/TestImages/planets/Earth.bmp)
-2、 在该程序的基础上，实现对图片的2x放大处理(图片可变动放大位置)
-3、 使用双缓冲绘图技术
-2、 在该程序的基础上，实现对图片的2x放大处理(图片可变动放大位置)
-3、 使用双缓冲绘图技术配置
-
 vscode颜色主题是： **Atom One Dark Theme**
 
 ![1665198457693](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665198457693.png)
@@ -1964,3 +1956,209 @@ unshift添加的老刘
 ## 4.列表排序
 
 ![1665669057928](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665669057928.png)
+
+
+
+
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!--准备一个容器-->
+    <div id ="root">
+        <h2>人员列表</h2>
+        <input type="text" placeholder="请输入名字" v-model="keyWord">
+        <button @click="sortType=2">年龄升序</button>
+        <button @click="sortType=1">年龄降序</button>
+        <button @click="sortType=0">原序</button>
+        <ul>
+            <li v-for="(p,index) of filPersons" :key="index">
+                {{p.name}}--{{p.age}}--{{p.sex}}
+            </li>
+        </ul>
+    </div>
+</body>
+
+<script>
+    Vue.config.productionTip = false;//阻止vue在启动生成生产提示。
+// 用computed实现
+    const vm = new Vue({
+        el:"#root",
+        data:{
+            keyWord:'',
+            sortType:0,//0原序，1降序，2升序
+            persons:[
+                {id:'001',name:'马冬梅',age:24,sex:'女'},
+                {id:'002',name:'周冬雨',age:62,sex:'女'},
+                {id:'003',name:'周杰伦',age:18,sex:'男'},
+                {id:'004',name:'温兆伦',age:19,sex:'男'},
+            ],
+           
+        },
+        computed:{
+            
+            filPersons(){
+                //计算属性必须有返回值
+
+                const arr= this.persons.filter((p)=>{
+                    return p.name.indexOf(this.keyWord)!==-1
+                })
+                //判断一下是否需要排序
+                // if(this.sortType!==0)
+                if(this.sortType){
+                    // 拿到过滤完的数组 arr，再排序
+                    arr.sort((p1,p2)=>{
+                        return this.sortType===1?p2.age-p1.age:p1.age-p2.age
+                    })
+                }
+                return arr
+            }
+        },
+    })
+</script>
+</html>
+
+```
+
+
+
+## 5.更新的
+
+
+
+## 6.监测数据改变的原理_对象 7.模拟一个数据监测
+
+
+
+![1665795109871](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665795109871.png)
+
+
+
+
+
+![1665795112381](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665795112381.png)
+
+
+
+
+
+vue是怎么检测你改变data中的数据呢？
+
+![1665793766737](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665793766737.png)
+
+
+
+
+
+
+
+这种写法
+
+![1665795214769](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665795214769.png)
+
+
+
+读也不行，改也不行
+
+![1665795210236](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665795210236.png)
+
+
+
+原因：递归死循环了
+
+![1665795626766](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665795626766.png)
+
+
+
+
+
+### 下面用观察者模式去写：Observer
+
+
+
+![1665795685481](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665795685481.png)
+
+
+
+
+
+
+
+![1665795629308](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665795629308.png)
+
+
+
+![1665795632285](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665795632285.png)
+
+
+
+![1665795664362](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665795664362.png)
+
+
+
+
+
+
+
+
+
+### vue比我们多做了数据代理
+
+![1665795750697](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665795750697.png)
+
+
+
+
+
+### vue比我们考虑到了递归监听
+
+a里面的对象b
+
+
+
+![1665795790761](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665795790761.png)
+
+
+
+
+
+![1665795868146](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665795868146.png)
+
+![1665795937013](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665795937013.png)
+
+
+
+
+
+### 即使放在了数组里面 也能找到
+
+![1665795979347](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665795979347.png)
+
+
+
+![1665796010116](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665796010116.png)
+
+
+
+
+
+
+
+### 用setter监测
+
+![1665796039949](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665796039949.png)
+
+
+
+
+
+## 8. Vue.set的使用
+
+
+
