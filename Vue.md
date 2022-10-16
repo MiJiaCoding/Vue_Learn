@@ -2702,9 +2702,72 @@ v-pre指令:
 
 # 16.自定义指令 directives
 
-不靠返回值
+. ....
+需求1:定义一个v-big指令，和v-text功能类似，但会把绑定的数值放大10倍。
+需求2:定义一个v-fbind指令，和v-bind功能类似，但可以让其所绑定的input元素默认获取焦点。自定义指令总结:
+
+一、定义语法:
+
+(1).局部指令:
+
+```html
+new Vue({
+	directives:{指令名,配置对象}
+})
+```
+
+![1665916816583](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665916816583.png)
+
+```html
+new Vue({
+	directives:{指令名,回调函数}
+})
+```
+
+![1665916791225](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665916791225.png)
 
 
+
+![1665916924086](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665916924086.png)
+
+
+
+(2).全局指令:
+
+```html
+Vue.directive(指令名,配置对象)
+```
+
+![1665916662857](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665916662857.png)
+
+
+```html
+Vue.directive(指令名,回调函数)
+```
+
+![1665916692179](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665916692179.png)
+
+二、配置对象中常用的3个回调:
+
+(1).bind:指令与元素**成功绑定**时调用。
+
+(2).inserted:指令所在**元素被插入页面**时调用。
+
+(3).update:指令所在模板结构被**重新解析**时调用。
+
+三、备注:
+
+1.指令**定义时不加v-**，但**使用时要加v-**;
+
+2.指令名如果是**多个单词**，要使用**kebab-case命名**方式，不要用camelCase命名。
+
+
+
+
+
+
+
+directives**不靠返回值**
 
 **big函数何时会被调用?**
 
@@ -2717,6 +2780,36 @@ v-pre指令:
 
 
 ![1665882316588](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665882316588.png)
+
+
+
+
+
+
+
+## bind inserted update
+![1665915233358](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665915233358.png)
+
+
+
+这样写不行，获取焦点失败，因为模板还没创建好就执行了focus()
+![1665912009215](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665912009215.png)
+
+
+
+
+
+
+
+
+
+
+
+### 设置全局指令
+
+
+
+![1665915997972](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665915997972.png)
 
 
 
