@@ -185,7 +185,7 @@ Vue模板语法有2大类:
 
 
 
-# 3.数据绑定
+# 3.数据绑定v-model v-bind 
 
 v-model 双向绑定
 
@@ -588,7 +588,7 @@ data.name 直接拿不到，我们直接let 一个data
 
 
 
-# 7.事件处理
+# 7.事件处理 v-on:xxx或@xxx
 
 
 
@@ -658,7 +658,15 @@ data.name 直接拿不到，我们直接let 一个data
 ## II.事件修饰符
 
 Vue中的事件修饰符:
-1.prevent:阻止默认事件（常用）;2.stop:随止事件冒泡（常用）;3.once:事件只触发一次（常用）;4.capture:使用事件的捕获模式;
+
+1.prevent:阻止默认事件（常用）;
+
+2.stop:随止事件冒泡（常用）;
+
+3.once:事件只触发一次（常用）;
+
+4.capture:使用事件的捕获模式;
+
 5.self:只有event.target是当前操作的元素是才触发事件;
 6.passive:事件的默认行为立即执行，无需等待事件回调执行完毕;
 
@@ -2549,4 +2557,170 @@ number:输入字符串转为有效的数字trim:输入首尾空格过滤
 </html>
 
 ```
+
+
+
+
+
+# 15.内置指令
+
+
+
+
+
+
+
+## v-text
+
+
+
+
+
+## v-html
+
+v-html指令:
+
+1. 作用:向指定节点中渲染**包含html结构**的内容。
+
+2. 与插值语法的区别:
+   (1).v-html会**替换**掉**节点**中**所有的内容**，{{xx}}则不会。
+
+   (2).v-html可以识别html结构。
+
+3. 严重注意:v-html有**安全性问题**!!!!
+
+   (1).在网站上动态渲染任意HTML是非常危险的，容易导致**XSS攻击**。
+
+   (2).**一定要在可信的内容上使用v-htm**l，永不要用在用户提交的内容上!
+
+
+
+
+## cookie
+
+![1665878594285](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665878594285.png)
+
+
+
+![1665878703491](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665878703491.png)
+
+
+
+
+
+
+
+
+
+### 窃取cookie
+
+document.cookie
+
+![1665879474714](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665879474714.png)
+
+
+
+![1665879315641](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665879315641.png)
+
+
+
+![1665879342703](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665879342703.png)
+
+
+
+
+
+
+
+### 安全性问题(xxs攻击)
+
+Http-Only
+
+![1665879403492](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665879403492.png)
+
+
+
+
+
+## v-cloak
+
+v-cloak指令（==没有值==）:
+
+1.本质是一个特殊属性，**Vue实例创建完毕并接管容器后**，==会删掉v-cloak属性==。
+
+2.使用**css配合v-cloak**可以解决**网速慢时页**面展示出{{xxx}}的问题。
+
+![1665880345593](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665880345593.png)
+
+
+
+![1665880533297](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665880533297.png)
+
+
+
+
+
+使用**css配合v-cloak**可以解决**网速慢时页**面展示出{{xxx}}的问题。
+
+display:none
+
+![1665880682679](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665880682679.png)
+
+
+
+## v-once
+
+v-once指令:
+1.v-once所在节点在**初次动态**渲染后，就**视为静态**内容了。
+2.**以后数据的改变不会引起v-once所在结构的更新**，可以用于==优化性能==。
+
+
+
+![1665880923557](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665880923557.png)
+
+
+
+![1665880980163](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665880980163.png)
+
+
+
+## v-pre
+
+v-pre指令:
+
+1.跳过其所在节点的**编译过程**。
+
+2.可**利用它跳过**:**没有使用指令语法**、**没有使用插值语法的节点**，会==加快编译==。
+
+
+
+![1665881289673](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665881289673.png)
+
+
+
+
+
+# 16.自定义指令 directives
+
+不靠返回值
+
+
+
+**big函数何时会被调用?**
+
+1.指令与元素成功绑定时(一上来)。
+
+2.指令所在的模板被重新解析时。
+
+![1665882795488](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665882795488.png)
+
+
+
+![1665882316588](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665882316588.png)
+
+
+
+
+
+
 
