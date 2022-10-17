@@ -10,6 +10,7 @@
     <div id ="root">
         <h2>当前的n值是:{{n}}</h2>
         <button @click="add">点我n+1</button>
+        <button @click="bye">点我销毁vm</button>
     </div>
 </body>
 
@@ -19,20 +20,67 @@
 
     const vm = new Vue({
         el:"#root",
+        //报错template不能右两个根节点，（这里是<h2>和<button>）
+        // template:`<h2>当前的n值是:{{n}}</h2>
+        // <button @click="add">点我n+1</button>`,
+
+
+        // template:`
+        // <div>
+        //     <h2>当前的n值是:{{n}}</h2>
+        //     <button @click="add">点我n+1</button>
+        // </div>
+        // `,
+
         data:{
             n:1,
         },
         methods:{
             add(){
+                console.log("调用了add")
                 this.n++
-            }
+            },
+            bye(){
+                console.log("调用了bye")
+                this.$destroy()
+            },
         },
         beforeCreate() {
             console.log("beforeCreate")
-            console.log(this)
-            debugger;
+            // console.log(this)
+            // debugger;
         },
-        
+        created(){
+            console.log("created")
+            // console.log(this)
+            // debugger;
+        },
+        beforeMount(){  
+            console.log("beforeMount")
+            // console.log(this)
+            // document.querySelector('h2').innerText='哈哈'
+            // debugger;
+        },
+        mounted(){
+            console.log("mounted"   )
+            // console.log(this)
+            // debugger;
+        },
+        beforeUpdate(){
+            console.log("beforeUpdata")
+            // console.log(this.n)
+            // debugger;
+        },
+        updated(){
+            console.log("updated")
+        },
+        beforeDestroy(){
+            console.log("beforeDestroy")
+            console.log(this.n)
+        },
+        destroyed(){
+            console.log("destroyed")
+        }
     })
 </script>
 </html>
