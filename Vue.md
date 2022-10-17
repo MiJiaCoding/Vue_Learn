@@ -2702,6 +2702,8 @@ v-pre指令:
 
 # 16.自定义指令 directives
 
+==总结如下==
+
 . ....
 需求1:定义一个v-big指令，和v-text功能类似，但会把绑定的数值放大10倍。
 需求2:定义一个v-fbind指令，和v-bind功能类似，但可以让其所绑定的input元素默认获取焦点。自定义指令总结:
@@ -2765,6 +2767,12 @@ Vue.directive(指令名,回调函数)
 
 
 
+==上面是总结==
+
+
+
+
+
 
 
 directives**不靠返回值**
@@ -2815,5 +2823,63 @@ directives**不靠返回值**
 
 
 
+# 17.生命周期
 
 
+
+生命周期:
+1.又名:生命周期回调函数、生命周期函数、**生命周期钩子**。
+
+2.是什么:Vue**在关健时刻**帮我们**调用**的一些特殊名称的函数。
+
+3.生命周期函数的**名字不可更改**，但函数的**具体内容**是程序员根据**需求编写**的。
+
+4.生命周期函数中的**this指向是vm** 或**组件实例对象**。
+
+
+
+## 1.引出生命周期
+
+
+
+
+
+![1665997507931](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665997507931.png)
+
+
+
+
+
+
+
+**错误写法**
+
+vue解析模板 调用change（）开启定时器，但是定时器里面修改了data中的opacity，此时vue会重新解析模板，有重新调用change（），然后右开始了一个定时器
+
+![1665998757746](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665998757746.png)
+
+
+
+![1665998870056](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665998870056.png)
+
+
+
+
+
+
+
+![1665999632023](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665999632023.png)
+
+
+
+
+
+
+
+
+
+## 2.分析生命周期
+
+
+
+![1665999876990](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1665999876990.png)

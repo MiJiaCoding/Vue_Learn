@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!--准备一个容器-->
+    <div id ="root">
+        <h2 v-if="a">你好啊</h2>
+        <!-- <h2 :style="{opacity:opacity}">欢迎学习Vue</h2> -->
+        <!--简写-->
+        <h2 :style="{opacity}">欢迎学习Vue</h2>
+        <!--错误写法        {{change()}}-->
+        <!-- {{change()}} -->
+    </div>
+</body>
+
+<script>
+    Vue.config.productionTip = false;//阻止vue在启动生成生产提示。
+
+
+    const vm = new Vue({
+        el:"#root",
+        data:{
+            opacity:1,
+            a:false,
+        },
+
+        a(){},
+        b(){},
+        // Vue完成模板解析并把初始的真实的DOM元素放入页面后(挂在完毕)调用mounted
+        mounted(){
+            console.log('mouted',this)//vue帮你维护好了，调mouted时候，this的指向就是vm
+            setInterval(()=>{
+                    this.opacity-=0.01
+                    // 不写vm.opacity===0是为了防止精度丢失
+                    if(this.opacity<=0) this.opacity=1
+                },16)
+        },
+        c(){},
+        d(){},
+
+        methods:{
+            change(){
+                 setInterval(()=>{
+                    this.opacity-=0.01
+                    // 不写vm.opacity===0是为了防止精度丢失
+                    if(this.opacity<=0) this.opacity=1
+                },16)
+            }
+        }
+    })
+
+
+
+    // // 定时器写在vue外面，但不建议，应该在vue里面就消化了
+    // setInterval(()=>{
+    //     vm.opacity-=0.01
+    //     // 不写vm.opacity===0是为了防止精度丢失
+    //     if(vm.opacity<=0) vm.opacity=1
+    // },16)
+
+</script>
+</html>
