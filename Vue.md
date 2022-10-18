@@ -2925,3 +2925,44 @@ vue解析模板 调用change（）开启定时器，但是定时器里面修改�
 
 
 ![1666016103143](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666016103143.png)
+
+
+
+
+
+# 对组件的理解
+
+模块化
+
+组件化
+
+
+
+**传统**
+
+![1666094185637](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666094185637.png)
+
+
+
+![1666094221121](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666094221121.png)
+
+
+
+**组件编程**
+
+![1666094259042](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666094259042.png)
+
+
+
+
+
+![1666094387132](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666094387132.png)
+
+
+
+![1666094425570](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666094425570.png)
+
+
+
+
+
