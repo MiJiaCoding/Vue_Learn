@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!--准备一个容器-->
+    <div id ="root">
+        <h2>欢迎来到{{name}}</h2>
+    </div>
+</body>
+
+<script>
+    Vue.config.productionTip = false;//阻止vue在启动生成生产提示。
+
+
+    //定义school组件
+    const shcool=Vue.extend({
+        name:'school',
+        template:`
+        <div>
+            <h2>学校名称:{{name}}</h2>
+            <h2>学校地址:{{address}}</h2>
+        </div>
+        `,
+        data(){
+            return {
+                name:'尚硅谷',
+                address:'北京',
+            }
+        }
+
+    })
+
+    const vm = new Vue({
+        el:"#root",
+        data:{
+            name:'尚硅谷',
+        },
+        methods:{
+
+        }
+    })
+</script>
+</html>
