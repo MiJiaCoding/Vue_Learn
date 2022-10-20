@@ -30,6 +30,28 @@ vscode颜色主题是： **Atom One Dark Theme**
 
 
 
+
+
+
+
+# 小技巧
+
+console.log() 方法
+
+用于在 console 窗口中输入信息。在调试时，可以替代 alert() 或 document.write() 输入需要输出的内容
+
+console.dir() 方法
+用来对一个对象进行检查(inspect)，并以易于阅读和打印的格式显示。该方法对于输入 DOM 对象非常有用，因为 dir 方法会显示DOM对象的所有属性
+
+打开控制台，在 Console 中分别输入 console.log(Promise) 和 console.dir(Promise) 可以看到一个输出的是 HTML 结构，一个类似于 JSON 结构,
+
+
+
+
+![1666228739001](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666228739001.png)
+
+
+
 #10/7/22 0.Vue简介
 
 
@@ -2844,7 +2866,7 @@ directives**不靠返回值**
 
 常用的生命周期钩子:
 
-1.mounted:发送ajax请求、启动定时器、绑定自定义事件、订阅消息等【初始化操作】
+1.mounted:**发送ajax请求、启动定时器、绑定自定义事件、订阅消息**等【初始化操作】
 
 2.beforeDestroy:清除定时器、解绑自定义事件、取消订阅消息等【收尾工作】。
 
@@ -3006,10 +3028,6 @@ Vue中使用组件的三大步骤;
 
 
 
-
-
-
-
 组件不写el
 
 **组件就是一块砖，哪里需要哪里搬**
@@ -3112,7 +3130,64 @@ Vue里面也可写成
 
 
 
-## VueComponent
+## VueComponent(构造函数)
+
+关于VueComponent:
+
+1.school组件本质是一个名为VueComponent的构造函数，且不是程序员定义的，是Vue.extend生成的。
+
+2.我们只需要写<school/>或<school></school>，**Vue解析时**会帮我们**创建school组件的实例对象**,即Vue帮我们执行的:new VueComponent(options)。
+
+3==.特别注意==:每次调用Vue.extend，**返回的都是一个全新的**VueComponent! !!!
+
+4.关于this指向:
+
+(1).**组件配置**中:
+
+> data函数、methods中的函数、watch中的函数、computed中的函数它们的this均是【**VueComponent实例对象**】
+
+(2).**new Vue()配置**中:
+
+> data函数、methods中的函数、watch中的函数、computed中的函数它们的**this**均是【**Vue实例对象**】。
+
+5.VueComponent的实例对象，以后简称**vc**（也可称之为:组**件实例对象**）。
+
+**Vue的实例对象**,以后简称**vm**。
 
 
 
+![1666226724695](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666226724695.png)
+
+
+
+## 一个重要的内置关系
+
+1.一个重要的内置关系:lueComponent.prototype._proto_ === Vue.prototype
+
+2.为什么要有这个关系:让组件实例对象（vc）可以访问到 Vue原型上的属性、方法,
+
+
+
+
+
+
+
+prototype显示原型属性
+
+__proto__隐式原型属性
+
+![1666227376006](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666227376006.png)
+
+
+
+![1666227805929](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666227805929.png)
+
+
+
+![1666227840149](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666227840149.png)
+
+
+
+
+
+ 

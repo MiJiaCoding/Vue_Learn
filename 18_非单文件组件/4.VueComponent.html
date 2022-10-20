@@ -8,7 +8,8 @@
 <body>
     <!--准备一个容器-->
     <div id ="root">
-        <h2>欢迎来到{{name}}</h2>
+        <school></school>
+        <hello></hello>
     </div>
 </body>
 
@@ -17,12 +18,13 @@
 
 
     //定义school组件
-    const shcool=Vue.extend({
+    const school=Vue.extend({
         name:'school',
         template:`
         <div>
-            <h2>学校名称:{{name}}</h2>
+            <h2> 学校名称:{{name}}</h2>
             <h2>学校地址:{{address}}</h2>
+            <button @click='showName'>点我提示学校名</button>
         </div>
         `,
         data(){
@@ -30,18 +32,41 @@
                 name:'尚硅谷',
                 address:'北京',
             }
-        }
-
-    })
-
-    const vm = new Vue({
-        el:"#root",
-        data:{
-            name:'尚硅谷',
         },
         methods:{
+            showName(){
+                console.log("showName",this)
+            }
 
         }
+       
+
+    })
+    const hello=Vue.extend({
+            template:`
+            <h2>{{msg}}</h2>
+
+            `,
+            data(){
+                return {
+                    msg:'你好啊！',
+                }
+            }
+
+        })
+
+
+    console.log('@',school)
+    console.log('#',hello)
+    console.log('school===hello?',school===hello)
+
+    //创建vm
+    const vm = new Vue({
+        el:"#root",
+        components:{
+            school,
+            hello,
+        },
     })
 </script>
 </html>
