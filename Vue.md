@@ -28,9 +28,11 @@ vscode颜色主题是： **Atom One Dark Theme**
 
 
 
+vetur
 
+识别.vue
 
-
+![1666237533238](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666237533238.png)
 
 
 
@@ -3160,11 +3162,19 @@ Vue里面也可写成
 
 
 
-## 一个重要的内置关系
+## 重要！！一个重要的内置关系 VueComponent.prototype._proto_ === Vue.prototype
 
-1.一个重要的内置关系:lueComponent.prototype._proto_ === Vue.prototype
+1.一个重要的内置关系:VueComponent.prototype._proto_ === Vue.prototype
 
 2.为什么要有这个关系:让组件实例对象（vc）可以访问到 Vue原型上的属性、方法,
+
+
+
+![1666236697629](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666236697629.png)
+
+
+
+
 
 
 
@@ -3190,4 +3200,20 @@ __proto__隐式原型属性
 
 
 
- 
+ 	![1666234307535](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666234307535.png)
+
+显示只有函数才拥有
+
+隐示只有实例才拥有
+
+
+
+
+
+# 19.单文件组件
+
+
+
+## 命名规范
+
+![1666237426277](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666237426277.png)
