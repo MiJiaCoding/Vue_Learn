@@ -1,21 +1,20 @@
-<<template>
-    <div>
+<template>
+    <div id="app">
         <School></School>
-        <Studnet></Studnet>
+        <Student></Student>
     </div>
 </template>
 
 <script>
-
     //引入组件
     import School from './components/School.vue'
-    import Student from './components/Student'
+    import Student from './components/Student.vue'
 
 
 export default {
     name: 'App',
-    template:`App`,
-    componets:{
+
+    components:{
         School,
         Student,
     },

@@ -259,7 +259,7 @@ data与el的2种写法
 1.el有2种写法
 (1).new Vue时候配置el属性。
 
-(2).先创建Vue实例，随后再通过vm.$mount( ' #root ')指定el的值。
+(2).先创建Vue实例，随后再通过**vm.$mount**( ' #root ')指定el的值。
 
 2.data有2种写法
 
@@ -3217,3 +3217,99 @@ __proto__隐式原型属性
 ## 命名规范
 
 ![1666237426277](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666237426277.png)
+
+
+
+
+
+![1666324282697](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666324282697.png)
+
+
+
+
+
+
+
+## 脚手架引入的vue一般残缺runtime版本，不能解析template（new vue（vm）里面的），所以要用render去渲染
+
+关于不同版本的Vue:
+
+1.vue.js  vue.runtime.xxx.js的区别:
+
+​	(1).vue.js是完整版的Vue，包含:核心功能+模板解析器。
+
+(2) .vue.runtime.xxx.js是运行版的Vue，只包含:核心功能;没有模板解析器。
+
+2.因为vue.runtime.xxx.js没有模板解析器，所以不能使用template配置项，需要使用render函数接收到的createElement函数去指定具体内容。
+
+
+
+
+
+![1666356635038](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666356635038.png)
+
+
+
+
+
+**不能改！！！**
+
+![1666357336096](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666357336096.png)
+
+
+
+# vue-cli
+
+
+
+## ref
+
+
+
+1.被用来给元素或子组件注册引用信息（id的替代者)
+
+2.应用在html标签上获取的是真实DOM元素，应用在组件标签上是组件实例对象(vc)3.使用方式:
+打标识: <h1 ref="xxx">.....</h1>或<School ref="xxx"></School>获取: this.$refs.xxx
+
+
+
+
+
+若绑定 <School/>可以得到一个组件的实例对象
+
+![1666360438710](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666360438710.png)
+
+
+
+
+
+
+
+![1666360530822](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666360530822.png)
+
+
+
+![1666360612509](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666360612509.png)
+
+
+
+
+
+下面是通过id来拿
+
+![1666360641822](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666360641822.png)
+
+
+
+![1666360632532](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666360632532.png)
+
+
+
+
+
+
+
+
+
+## props配置
+

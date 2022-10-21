@@ -14,6 +14,7 @@
 
 export default {
     name: 'App',
+    template:`App`,
     componets:{
         School,
         Student,

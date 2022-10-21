@@ -1,5 +1,4 @@
 <template>
-    // 组件结构
     <div class="demo">
         <h2>学校名称：{{name}}</h2>
         <h2>学校名称：{{address}}</h2>
@@ -43,11 +42,7 @@
                 console.log("showName",this)
             }
         }
-    }
-    }
-
-  
-    
+    }    
 </script>
 
 
