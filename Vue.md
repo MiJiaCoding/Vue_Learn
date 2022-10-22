@@ -211,6 +211,12 @@ Vue模板语法有2大类:
 
 # 3.数据绑定v-model v-bind 
 
+v-bind:age="18+1"
+
+(" " 里面的是表达式，v-bind会去计算（即变成不是字符串）)
+
+
+
 v-model 双向绑定
 
 v-bind 单项绑定
@@ -2724,7 +2730,7 @@ v-pre指令:
 
 
 
-# 16.自定义指令 directives
+# 16.自定义指令 directives  
 
 ==总结如下==
 
@@ -3262,7 +3268,13 @@ __proto__隐式原型属性
 
 
 
-## ref
+## 1.分析脚手架src
+
+略
+
+
+
+## 2.ref
 
 
 
@@ -3311,7 +3323,193 @@ __proto__隐式原型属性
 
 
 
-## props配置
+## 3.props配置
 
 
 
+功能:让组件接收外部传过来的数据
+
+(1).传递数据:
+<Demo name="xxx"/>
+
+(2).接收数据:
+
+第一种方式（只接收）:
+
+```vue
+props: [ ' name ']
+```
+
+
+
+第二种方式（限制类型):
+
+```vue
+props:{
+	name : Number
+}
+```
+
+
+第三种方式（限制类型、限制必要性、指定默认值):
+
+```vue
+props:{
+	name:{
+	type:String,//类型
+	required:true,//必要性
+	default:'老王’/默认值
+}
+```
+
+
+
+备注: ==props是只读的,Vue底层会监测你对props的修改，如果进行了修改，就会发出警告，若业务需求确实需要修改，那么请复制props的内容到data中一份，然后去修改data中的数据==。
+
+
+
+
+
+
+
+## 4.mimix
+
+功能:可以把多个组件共用的配置提取成一个混入对象使用方式:
+第一步定义混合，例如:
+
+```vue
+{
+	data(){....},
+	methods:{f....}
+}	
+```
+
+第二步使用混入，例如:
+
+(1).全局混入:**Vue.mixin(xxx)**
+
+(2).局部混入:**mixins: [ "xxx ']**
+
+
+
+==混合 不是替代！如果既有mixin，又有自己的 ，则最终结果是自己的。（但是mouted除外，mouted 对这两者都执行）==
+
+
+
+![1666402506506](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666402506506.png)
+
+
+
+![1666402529131](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666402529131.png)
+
+
+
+
+
+
+
+
+
+![1666402569117](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666402569117.png)
+
+
+
+![1666402583356](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666402583356.png)
+
+
+
+
+
+也可以在main.js进行全局引入
+
+![1666402839668](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666402839668.png)
+
+
+
+
+
+## 5.插件
+
+功能:用于增强Vue
+
+本质:**包含install方法的一个对象**，install的**第一个参数是Vue**，第二个以后的参数是插件使用者传递的数据。
+
+定义插件:
+
+```vue
+对象.install = function (Vue, options) {
+
+	// 1。添加全局过滤器
+	Vue.filter(....)
+
+	//2.添加全局指令
+	vue.directive(....)
+
+	// 3.配置全局混入(合)
+	Vue.mixin(....)
+
+	//4.添加实例方法
+	Vue.prototype.$myMethod = function () {...}
+	Vue.prototype.$myProperty = xxxx
+}
+```
+
+**使用插件:V  
+
+
+
+![1666405417243](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666405417243.png)
+
+
+
+![1666405371387](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666405371387.png)
+
+
+
+## scoped
+
+
+
+作用:让样式在局部生效，防止冲突。
+
+写法: <style scoped>
+
+
+
+
+
+
+
+
+
+![1666421237918](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666421237918.png)
+
+
+
+![1666421249973](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666421249973.png)
+
+
+
+
+
+## uuid nanoid
+
+
+
+![1666427501786](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666427501786.png)
+
+
+
+
+
+## 儿子怎么给父亲传？（答：父给儿子 传函数...props）
+
+父亲给儿子传可以，但若想儿子传给父亲呢？（不用vuex等等那3中高级方法（此时还没学））
+
+![1666428191633](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666428191633.png)
+
+
+
+父亲定义一个函数，把这个函数传给儿子，让儿子去调用这个函数
+
+![1666429058083](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666429058083.png)
