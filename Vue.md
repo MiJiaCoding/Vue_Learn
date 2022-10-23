@@ -3513,3 +3513,16 @@ props:{
 父亲定义一个函数，把这个函数传给儿子，让儿子去调用这个函数
 
 ![1666429058083](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666429058083.png)
+
+
+
+
+
+
+
+
+
+
+
+![1666448455775](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666448455775.png)
+
