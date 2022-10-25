@@ -6,9 +6,9 @@
         <MyHeader :addTodo="addTodo"></MyHeader>
 
         <!-- 父亲App给儿子 list传，  儿子list还要去接收-->
-        <MyList :todos="todos"></MyList>
+        <MyList :todos="todos":checkTodo="checkTodo":deleteTodo="deleteTodo"></MyList>
 
-        <MyFooter></MyFooter>
+        <MyFooter :todos="todos" :checkAllTodo='checkAllTodo' :clearAllTodo="clearAllTodo"></MyFooter>
       </div>
     </div>
   </div>
@@ -37,12 +37,36 @@ export default {
   },
 
   methods:{
+    // 添加一个todo
     addTodo(todoObj){
       console.log("我是App组件,我收到了数据:",todoObj)
       this.todos.unshift(todoObj)
+    },
+    //勾选or取消勾选一个todo
+    checkTodo(id){
+      this.todos.forEach((todo)=>{
+        if(todo.id===id){
+          todo.done = !todo.done
+        }
+      })
+    },
+    //删除一个todo
+    deleteTodo(id){
+      // this.todos=this.todos.filter((todo)=>{
+      //   return todo.id!==id
+      this.todos=this.todos.filter(todo=>todo.id!==id)
+    },
+    //全选or取消全选
+    checkAllTodo(done){
+      this.todos.forEach((todo)=>{
+        todo.done=done
+      })
+    },
+    //清除所有已经完成的todo
+    clearAllTodo(){
+      this.todos=this.todos.filter(todo=>!todo.done)
     }
   },
-
 }
 </script>
 

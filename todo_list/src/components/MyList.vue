@@ -6,8 +6,14 @@
         <MyItem></MyItem> -->
  
         <!--写了 ' : ' ， " "才是表达式, 才能读到 -->
-        <MyItem v-for = "todoObj in todos" :key="todoObj.id" :todo="todoObj" />
-        
+        <MyItem
+          v-for = "todoObj in todos" 
+          :key="todoObj.id" 
+          :todo="todoObj" 
+          :checkTodo="checkTodo"
+          :deleteTodo="deleteTodo"
+        />
+         
       </ul>
 </template>
 
@@ -19,7 +25,7 @@ export default {
     name: 'MyList',
     components:{MyItem},
     // 接受父亲App 传入的todos
-    props:['todos'],
+    props:['todos','checkTodo','deleteTodo'],
   
 };
 </script>
