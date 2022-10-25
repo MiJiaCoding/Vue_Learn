@@ -3558,5 +3558,113 @@ props:{
 
 
 
-# 浏览器的本地存储
+# 浏览器的本地存储（webStorage）
 
+1. 存储内容大小一般支持**5MB左右**（不同浏览器可能还不一样）
+
+2. 浏览器端通过 **Window.sessionStorage** 和 **Window.localStorage** 属性来实现**本地存储机制**。
+
+3. 相关API：
+
+   1. ```xxxxxStorage.setItem('key', 'value');```
+       				该方法接受一个键和值作为参数，会把键值对添加到存储中，如果键名存在，则更新其对应的值。
+
+   2. ```xxxxxStorage.getItem('person');```
+
+      ​		该方法接受一个键名作为参数，返回键名对应的值。
+
+   3. ```xxxxxStorage.removeItem('key');```
+
+      ​		该方法接受一个键名作为参数，并把该键名从存储中删除。
+
+   4. ``` xxxxxStorage.clear()```
+
+      ​		该方法会清空存储中的所有数据。
+
+4. 备注：
+
+   1. SessionStorage存储的内容会随着浏览器窗口关闭而消失。
+   2. LocalStorage存储的内容，需要**手动清除**才会消失。
+   3. ```xxxxxStorage.getItem(xxx)```如果xxx对应的value获取不到，那么getItem的返回值是null。
+   4. ```JSON.parse(null)```的结果依然是null。
+
+
+
+
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sessionStorage</title>
+</head>
+<body>
+    <h2>sessionStorage</h2>
+    <button onclick="saveData()">点我保存一个数据</button>
+    <button onclick="readData()">点我读取一个数据</button>
+    <button onclick="deleteData()">点我删除一个数据</button>
+    <button onclick="deleteAllData()">点我删除清空</button>
+
+    <script>
+        function saveData(){
+            let p ={name:'张三',age:18}
+            console.log(p.toString())
+            sessionStorage.setItem('msg1','hello!')
+            sessionStorage.setItem('msg2',666)
+            // sessionStorage.setItem('person',p)//直接是obeject 看不到内容
+            sessionStorage.setItem('person',JSON.stringify(p))
+        }
+        function readData(){
+            console.log(sessionStorage.getItem('msg1'))
+            console.log(sessionStorage.getItem('msg2'))
+            
+
+            console.log(JSON.parse(sessionStorage.getItem('person')))
+
+        }
+        function deleteData(){
+            sessionStorage.removeItem('msg2')
+        }
+        function deleteAllData(){
+            sessionStorage.clear()
+        }
+    </script>
+
+</body>
+</html>
+```
+
+
+
+## 组件的自定义事件
+
+1. 一种组件间通信的方式，适用于：<strong style="color:red">子组件 ===> 父组件</strong>
+
+2. 使用场景：A是父组件，B是子组件，B想给A传数据，那么就要在A中给B绑定自定义事件（<span style="color:red">事件的回调在A中</span>）。
+
+3. 绑定自定义事件：
+
+   1. 第一种方式，在父组件中：```<Demo @atguigu="test"/>```  或 ```<Demo v-on:atguigu="test"/>```
+
+   2. 第二种方式，在父组件中：
+
+      ```js
+      <Demo ref="demo"/>
+      ......
+      mounted(){
+         this.$refs.xxx.$on('atguigu',this.test)
+      }
+      ```
+
+   3. 若想让自定义事件只能触发一次，可以使用```once```修饰符，或```$once```方法。
+
+4. 触发自定义事件：```this.$emit('atguigu',数据)```		
+
+5. 解绑自定义事件```this.$off('atguigu')```
+
+6. 组件上也可以绑定原生DOM事件，需要使用```native```修饰符。
+
+7. 注意：通过```this.$refs.xxx.$on('atguigu',回调)```绑定自定义事件时，回调<span style="color:red">要么配置在methods中</span>，<span style="color:red">要么用箭头函数</span>，否则this指向会出问题！

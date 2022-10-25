@@ -28,11 +28,12 @@ export default {
   },
   data(){
     return{
-      todos:[
-        {id:'001',title:'抽烟',done:true},
-        {id:'002',title:'喝酒',done:false},
-        {id:'003',title:'烫头',done:true},
-      ]     
+      // todos:[
+      //   {id:'001',title:'抽烟',done:true},
+      //   {id:'002',title:'喝酒',done:false},
+      //   {id:'003',title:'烫头',done:true},
+      // ]     
+      todos:JSON.parse(localStorage.getItem('todos'))||[],
     }
   },
 
@@ -67,6 +68,21 @@ export default {
       this.todos=this.todos.filter(todo=>!todo.done)
     }
   },
+  watch:{
+    // // 监视不到数组里面的，所以要开启深度监视，不用简写方式
+    // todos(value){
+    //   // localStorage.setItem('todos',value)
+    //   localStorage.setItem('todos',JSON.stringify(value))
+    // }
+
+    todos:{
+      deep:true,
+      handler(value){
+        localStorage.setItem('todos',JSON.stringify(value))
+
+      }
+    }
+  }
 }
 </script>
 
