@@ -15,7 +15,7 @@
 export default {
     name: 'App',
     template:`App`,
-    componets:{
+    components:{
         School,
         Student,
     },
