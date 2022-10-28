@@ -3182,7 +3182,7 @@ Vue里面也可写成
 
 1.一个重要的内置关系:VueComponent.prototype._proto_ === Vue.prototype
 
-2.为什么要有这个关系:让组件实例对象（vc）可以访问到 Vue原型上的属性、方法,
+2.为什么要有这个关系:**让组件实例对象（vc）可以访问到 Vue原型上的属性、方法,**
 
 
 
@@ -3745,15 +3745,29 @@ props:{
 
 
 
+
+
 x应该具备什么呢？
 
 1.所有组件都能看到
 
 2.x可以调用$on、$off、$emit
 
-![1666948859995](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666948859995.png)
+
 
 ![1666949083730](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666949083730.png)
+
+
+
+
+
+不可以放在vueComponent上，报错！
+
+![1666950720692](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666950720692.png)
+
+原因如图：
+
+![1666950699480](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1666950699480.png)
 
 
 

@@ -7,9 +7,9 @@
         <MyHeader @addTodo="addTodo"></MyHeader>
 
         <!-- 父亲App给儿子 list传，  儿子list还要去接收-->
-        <MyList :todos="todos":checkTodo="checkTodo":deleteTodo="deleteTodo"></MyList>
+        <!-- <MyList :todos="todos":checkTodo="checkTodo":deleteTodo="deleteTodo"></MyList> -->
+        <MyList :todos="todos"/>
 
-        <!-- <MyFooter :todos="todos" :checkAllTodo='checkAllTodo' :clearAllTodo="clearAllTodo"></MyFooter> -->
         <MyFooter :todos="todos" @checkAllTodo='checkAllTodo' @clearAllTodo="clearAllTodo"></MyFooter>
       </div>
     </div>
@@ -84,6 +84,14 @@ export default {
 
       }
     }
+  },
+  mounted(){
+    this.$bus.$on('checkTodo',this.checkTodo)
+    this.$bus.$on('deleteTodo',this.deleteTodo)
+  },
+  beforeDestroy(){
+    this.$bus.$off('checkTodo')
+    this.$bus.$off('deleteTodo')
   }
 }
 </script>

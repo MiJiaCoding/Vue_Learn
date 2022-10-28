@@ -1,10 +1,8 @@
 <template>
-    <div id="app">
-        <School></School>
-        <Student name="李四" sex="女" v-bind:age="19"></Student>
-        <!-- <Student name="王老五" sex="男" :age="25"></Student> -->
-        <Student name="王老五" sex="男" ></Student>
-    
+    <div id="app" class="app">
+        <h1>{{msg}}</h1>    
+        <School/>
+        <Student/>
     </div>
 </template>
 
@@ -24,20 +22,17 @@ export default {
 
     data() {
         return {
-            
+            msg:'你好啊!',
         };
     },
-
-    mounted() {
-        
-    },
-
-    methods: {
-        
-    },
+     
 };
 </script>
 
-<style lang="scss" scoped>
 
+<style lang="css" scoped>
+    .app{
+        background-color:gray;
+        padding: 5px;
+    }
 </style>

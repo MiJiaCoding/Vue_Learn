@@ -10,8 +10,6 @@
           v-for = "todoObj in todos" 
           :key="todoObj.id" 
           :todo="todoObj" 
-          :checkTodo="checkTodo"
-          :deleteTodo="deleteTodo"
         />
          
       </ul>
@@ -24,8 +22,9 @@ import MyItem from './MyItem.vue'
 export default {
     name: 'MyList',
     components:{MyItem},
-    // 接受父亲App 传入的todos
-    props:['todos','checkTodo','deleteTodo'],
+    // // 接受父亲App 传入的todos
+    // props:['todos','checkTodo','deleteTodo'],
+    props:['todos'],
   
 };
 </script>

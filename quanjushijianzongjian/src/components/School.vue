@@ -2,7 +2,7 @@
     <div class="school">
         <h2>学校名称：{{name}}</h2>
         <h2>学校名称：{{address}}</h2>
-        <button @click="sendSchoolName">把学校名给App</button>
+        
     </div>
 </template>
 
@@ -17,11 +17,15 @@
                 address:'北京',
             }
         },
-        methods:{
-            sendSchoolName(){
-                this.getSchoolName(this.name)
-                // console.log('sendSchoolName里面的this:',this)
-            }
+        mounted(){
+            // School组件想接收数据，则在School组件中给$bus绑定自定义事件，
+            // 事件的回调留在A组件自身
+            this.$bus.$on('hello',(data)=>{
+                console.log('我是School组件,收到了数据',data)
+            })
+        },
+        beforeDestroy(){
+            this.$bus.$off('hello')
         }
     }    
 </script>
