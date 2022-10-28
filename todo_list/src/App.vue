@@ -3,12 +3,14 @@
     <div class="todo-container">
       <div class="todo-wrap">
 
-        <MyHeader :addTodo="addTodo"></MyHeader>
+        <!-- <MyHeader :addTodo="addTodo"></MyHeader> -->
+        <MyHeader @addTodo="addTodo"></MyHeader>
 
         <!-- 父亲App给儿子 list传，  儿子list还要去接收-->
         <MyList :todos="todos":checkTodo="checkTodo":deleteTodo="deleteTodo"></MyList>
 
-        <MyFooter :todos="todos" :checkAllTodo='checkAllTodo' :clearAllTodo="clearAllTodo"></MyFooter>
+        <!-- <MyFooter :todos="todos" :checkAllTodo='checkAllTodo' :clearAllTodo="clearAllTodo"></MyFooter> -->
+        <MyFooter :todos="todos" @checkAllTodo='checkAllTodo' @clearAllTodo="clearAllTodo"></MyFooter>
       </div>
     </div>
   </div>

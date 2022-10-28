@@ -15,7 +15,9 @@
 <script>
 export default {
     name: 'MyFooter',
-    props:['todos','checkAllTodo','clearAllTodo'],
+    // props:['todos','checkAllTodo','clearAllTodo'],
+    props:['todos'],
+    
     computed:{
       total(){
         return this.todos.length
@@ -42,7 +44,8 @@ export default {
         },
         set(value){
           // console.log("@@",value) // true or false
-          this.checkAllTodo(value)// 这里的value等价于e.target.checked
+          // this.checkAllTodo(value)// 这里的value等价于e.target.checked
+          this.$emit('checkAllTodo',value)
         }
        
       },
@@ -54,7 +57,9 @@ export default {
       //   this.checkAllTodo(e.target.checked)
       // },
       clearAll(){
-        this.clearAllTodo()
+        // this.clearAllTodo()
+        this.$emit('clearAllTodo')
+        
       },
     }
 };
