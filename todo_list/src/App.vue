@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import pubsub from 'pubsub-js'
 import MyHeader from './components/MyHeader.vue'
 import MyList from './components/MyList.vue'
 import MyFooter from './components/MyFooter.vue'
@@ -54,9 +55,13 @@ export default {
       })
     },
     //删除一个todo
-    deleteTodo(id){
-      // this.todos=this.todos.filter((todo)=>{
-      //   return todo.id!==id
+    // deleteTodo(id){
+    //   // this.todos=this.todos.filter((todo)=>{
+    //   //   return todo.id!==id
+    //   this.todos=this.todos.filter(todo=>todo.id!==id)
+    // },
+    deleteTodo(_,id){
+      //_占个位(消息订阅里面的消息名msgName)不需要用
       this.todos=this.todos.filter(todo=>todo.id!==id)
     },
     //全选or取消全选
@@ -68,7 +73,15 @@ export default {
     //清除所有已经完成的todo
     clearAllTodo(){
       this.todos=this.todos.filter(todo=>!todo.done)
-    }
+    },
+    //更新一个todo
+    updateTodo(id,title){
+      this.todos.forEach((todo)=>{
+        if(todo.id===id){
+          todo.title=title
+        }
+      })
+    },
   },
   watch:{
     // // 监视不到数组里面的，所以要开启深度监视，不用简写方式
@@ -87,11 +100,17 @@ export default {
   },
   mounted(){
     this.$bus.$on('checkTodo',this.checkTodo)
-    this.$bus.$on('deleteTodo',this.deleteTodo)
+    // this.$bus.$on('deleteTodo',this.deleteTodo)
+    this.$bus.$on('updateTodo',this.updateTodo)
+
+    this.pubId=pubsub.subscribe('deleteTodo',this.deleteTodo)
   },
   beforeDestroy(){
     this.$bus.$off('checkTodo')
-    this.$bus.$off('deleteTodo')
+    // this.$bus.$off('deleteTodo')
+    this.$bus.$off('updateTodo')
+
+    pubsub.unsubscribe(this.pubId)
   }
 }
 </script>
@@ -120,6 +139,12 @@ export default {
     color: #fff;
     background-color: #da4f49;
     border: 1px solid #bd362f;
+  }
+  
+  .btn-edit {
+    color: #fff;
+    background-color: skyblue;
+    border: 1px solid rgb(76, 114, 129);
   }
 
   .btn-danger:hover {

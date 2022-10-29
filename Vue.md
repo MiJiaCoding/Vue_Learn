@@ -677,7 +677,7 @@ data.name 直接拿不到，我们直接let 一个data
                 // console.log(a,b,c,d)
             },
             //箭头函数  window
-            showInfo:(eve )=>{
+            showInfo:(event)=>{
                 console.log("用箭头函数下的this是什么?:",this)
             },
             showInfo1(event){
@@ -3802,3 +3802,102 @@ x应该具备什么呢？
    4. 提供数据：```pubsub.publish('xxx',数据)```
 
    5. 最好在beforeDestroy钩子中，用```PubSub.unsubscribe(pid)```去<span style="color:red">取消订阅。</span>
+
+
+
+
+
+
+
+![1667001187402](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1667001187402.png)
+
+订阅消息
+
+注意：用箭头函数 this才是vm 不然就是 undefined
+
+注意取消订阅时候里面的参数！！！ 不能是'hello'，
+
+每一个消息有一个pubId，把这个在mounted（）挂载到vm上就可以在beforeDestroy（）调用到
+
+![1667002071559](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1667002071559.png)
+
+否则：得在methods里面写个方法去调用，这时候this 才是vue
+
+![1667002109470](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1667002109470.png)
+
+Student发布消息
+
+![1667002023369](C:\Users\mijia\AppData\Roaming\Typora\typora-user-images\1667002023369.png)
+
+
+
+
+
+
+
+## nextTick
+
+1. 语法：```this.$nextTick(回调函数)```
+2. 作用：在**下一次 DOM 更新结束后**执行其指定的回调。
+3. 什么时候用：当改变数据后，==要基于更新后的新DOM进行某些操作时==，要在nextTick所指定的回调函数中执行。
+
+MyItem.vue
+
+```js
+ // 编辑
+        handleEdit(todo){
+          // todo.isEdit=true //这样不是响应式 错误！！
+          // this.$set(todo,'isEdit',true)
+          // console.log(todo)
+          if(todo.hasOwnProperty('isEdit')){
+            todo.isEdit=true
+          }else{
+            this.$set(todo,'isEdit',true)
+          }
+          // 顺序上的问题 vue设定是执行这个handleEdit这个ifelse后不是立即去解析模板，而是接着执行后面的语句
+          // 不直接用this.$refs.inputTitle.focus()
+          // 可用定时器解决，但还是推荐用nextTick
+          // setTimeout(()=>{
+          //   this.$refs.inputTitle.focus()
+
+          // },200)
+          this.$nextTick(function(){
+            this.$refs.inputTitle.focus()
+          })
+  
+        },
+```
+
+
+
+## (未学！)Vue封装的过度与动画
+
+1. 作用：在插入、更新或移除 DOM元素时，在合适的时候给元素添加样式类名。
+
+2. 图示：<img src="https://img04.sogoucdn.com/app/a/100520146/5990c1dff7dc7a8fb3b34b4462bd0105" style="width:60%" />
+
+3. 写法：
+
+   1. 准备好样式：
+
+      - 元素进入的样式：
+        1. v-enter：进入的起点
+        2. v-enter-active：进入过程中
+        3. v-enter-to：进入的终点
+      - 元素离开的样式：
+        1. v-leave：离开的起点
+        2. v-leave-active：离开过程中
+        3. v-leave-to：离开的终点
+
+   2. 使用```<transition>```包裹要过度的元素，并配置name属性：
+
+      ```vue
+      <transition name="hello">
+      	<h1 v-show="isShow">你好啊！</h1>
+      </transition>
+      ```
+
+   3. 备注：若有多个元素需要过度，则需要使用：```<transition-group>```，且每个元素都要指定```key```值。
+
+
+
