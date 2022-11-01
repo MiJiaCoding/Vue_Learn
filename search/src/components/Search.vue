@@ -22,10 +22,29 @@ export default {
       }
     },
     methods:{
+      // searchUsers(){
+      //   //请求前更新List的数据
+      //   this.$bus.$emit('updateListData',{isFirst:false,isLoading:true,errMsg:'',users:[]})
+      //   axios.get(`https://api.github.com/search/users?q=${this.keyWord}`).then(
+      //     response=>{
+      //       // console.log('请求成功了',response.data.items)
+      //       // this.$bus.$emit('getUsers',response.data.items)
+      //       //请求成功更新List的数据
+      //       this.$bus.$emit('updateListData',{isLoading:false,errMsg:'',users:response.data.items})
+
+      //     },
+      //     error=>{
+      //       // console.log('请求失败了',error.message)
+      //       //请求失败后更新List的数据
+      //       this.$bus.$emit('updateListData',{isLoading:false,errMsg:error.message,users:[]})
+      //     })
+
+
+      //使用vue-resource 去请求
       searchUsers(){
         //请求前更新List的数据
         this.$bus.$emit('updateListData',{isFirst:false,isLoading:true,errMsg:'',users:[]})
-        axios.get(`https://api.github.com/search/users?q=${this.keyWord}`).then(
+        this.$http.get(`https://api.github.com/search/users?q=${this.keyWord}`).then(
           response=>{
             // console.log('请求成功了',response.data.items)
             // this.$bus.$emit('getUsers',response.data.items)
@@ -37,7 +56,6 @@ export default {
             // console.log('请求失败了',error.message)
             //请求失败后更新List的数据
             this.$bus.$emit('updateListData',{isLoading:false,errMsg:error.message,users:[]})
-
           })
     }
   }
